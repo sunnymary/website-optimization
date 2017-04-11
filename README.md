@@ -18,7 +18,7 @@ This project repo is hosted on Github Pages. Open the following link and do the 
    * add `media` attribute to the css link for `print.css`.
    * optimize google font by using [web font loader](https://github.com/typekit/webfontloader#google) tool.
    * change external stylesheet `style.css` to internal.
-3. Leverage browser caching
+   * PageScore: Mobile - 91/100, Desktop - 92/100
 
 ### Goal 2: Render with a consistent frame-rate at 60fps when scrolling.
 
