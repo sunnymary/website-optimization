@@ -16,7 +16,8 @@ This project repo is hosted on Github Pages. Open the following link and do the 
 2. Eliminate render-blocking JavaScript and CSS in above-the-fold content
    * remove render-blocking Javascript `http://www.google-analytics.com/analytics.js` by adding `async` keyword
    * add `media` attribute to the css link for `print.css`.
-   * optimize google font by using [web font loader](https://github.com/typekit/webfontloader#google) tool and inlining the script.
+   * optimize google font by using [web font loader](https://github.com/typekit/webfontloader#google) tool.
+   * change external stylesheet `style.css` to internal.
 3. Leverage browser caching
 
 ### Goal 2: Render with a consistent frame-rate at 60fps when scrolling.
