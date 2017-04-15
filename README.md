@@ -22,14 +22,14 @@ This project repo is hosted on Github Pages. Open the following link and do the 
 
 ### Goal 2: Render with a consistent frame-rate at 60fps when scrolling - views/pizza.html.
 1. scrolling JANK
-   * Use Chrome DevTool Timeline to find out the JANK symptom is forced layout trashing. The problem is cause by JavaScript - `updatePositions` function.
-   * In `updatePositions` function, in the for loop, heavy math is done to reduce speed. So I move repetitive calculation from big for loop out and store pre-calculated data in an Array.(see views/js/main.js line 510)
-   * JS created 200 pizzas. But it is not necessary. I changed the pizza number from 200 to 30.(see views/js/main.js line 544)
+   * Use Chrome DevTool Timeline to find out the JANK symptom is forced layout trashing. The problem is caused by JavaScript - `updatePositions` function.
+   * In `updatePositions` function, in the for loop, heavy math is done to reduce speed. So I move repetitive calculation from big for loop out and store pre-calculated data in an Array.(see `views/js/main.js:510`)
+   * JS created 200 pizzas. But it is not necessary. I changed the pizza number from 200 to 30.(see `views/js/main.js:544`)
    * Result achieved 60fps when scrolling.
 
 2. resizing JANK
-   * Use Chrome DevTool Timeline to find out the JANK symptom is forced reflow. The problem is cause by JavaScript - `changePizzaSizes` function.
-   * In `changePizzaSizes` function, there is no need to calculate the newwidth for all the pizza elements. Calcuate only one newwidth of a pizza element and apply it to all others.(see views/js/main.js line 450)
+   * Use Chrome DevTool Timeline to find out the JANK symptom is forced reflow. The problem is caused by JavaScript - `changePizzaSizes` function.
+   * In `changePizzaSizes` function, there is no need to calculate the newwidth for all the pizza elements. Calcuate only one newwidth of a pizza element and apply it to all others.(see `views/js/main.js:450`)
    * Result achieved within 5ms when resizing.
 
 
