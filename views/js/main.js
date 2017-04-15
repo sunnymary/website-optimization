@@ -447,12 +447,16 @@ var resizePizzas = function(size) {
     return dx;
   }
 
-  // Iterates through pizza elements on the page and changes their widths
+  //OPTIMIZATION-resize: there is no need to calculate the newwidth for all the pizza.
+  //Calcuate only one newwidth of a pizza element and apply it to all others.
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    var randomPizzaContainer = document.getElementsByClassName("randomPizzaContainer");
+    var dx = determineDx(randomPizzaContainer[0], size);
+    var newwidth = (randomPizzaContainer[0].offsetWidth + dx) + 'px';
+    randomPizzaContainer[0].style.width = newwidth;
+
+    for (var i = 1; i < randomPizzaContainer.length; i++) {
+      randomPizzaContainer[i].style.width = newwidth;
     }
   }
 
@@ -502,9 +506,21 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   var items = document.querySelectorAll('.mover');
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+
+  //OPTIMIZATION-scroll: move repetitive calculation from big for loop out
+  //and store data in an Array
+
+  var phaseArray = [];
+  var num1 = document.body.scrollTop / 1250;
+  for (var i = 0; i < 5; i++) {
+    var phase = Math.sin(num1 + i);
+    phaseArray.push(phase);
+  }
+
+  for (var i = 0; i < items.length; i+=5) {
+    for (var j = 0; j < 5; j++) {
+      items[i+j].style.left = items[i+j].basicLeft + 100 * phaseArray[j] + 'px';
+    }
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -524,7 +540,8 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  //OPTIMIZATION-scroll: reduce created pizza number from 200 to 30.
+  for (var i = 0; i < 30; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
